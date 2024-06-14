@@ -59,7 +59,7 @@ function replaceImage(image_url, replacement_urls) {
 // create an array with all the images of ./images/cage/*.jpg
 var replacementImages = [];
 for (var i = 1; i <= 9; i++) {
-    var imgURL = chrome.extension.getURL('images/cage/nc' + i + '.jpg');
+    var imgURL = chrome.runtime.getURL('images/cage/nc' + i + '.jpg');
     replacementImages.push(imgURL);
 }
 
