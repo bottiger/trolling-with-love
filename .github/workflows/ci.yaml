@@ -1,9 +1,10 @@
-name: "Build"
+name: 'Release'
+
 on:
   push:
-    branches:
-      - main
-  pull_request:
+    tags:
+      - v*
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: "web-ext build"
         id: web-ext-build
@@ -20,10 +21,40 @@ jobs:
           cmd: build
           source: src
           filename: "{name}-{version}.xpi"
-          ignoreFiles: '[ "package.json","package-lock.json","yarn.lock" ]'
+  
+      - name: "Web Ext Sign"
+        id: web-ext-sign
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: sign
+          source: ${{ steps.web-ext-build.outputs.target }}
+          channel: unlisted
+          apiKey: ${{ secrets.AMO_SIGN_KEY }}
+          apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
+          timeout: 900000
 
       - name: "Upload Artifact"
         uses: actions/upload-artifact@v3
         with:
-          name: target.xpi
+          name: web-ext-${{ github.ref_name }}.xpi
           path: ${{ steps.web-ext-build.outputs.target }}
+
+  release:
+    needs: build
+    name: "Release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Download Artifact"
+        - name: "Download Artifact"
+          uses: actions/download-artifact@v3
+          with:
+            name: web-ext-${{ github.ref_name }}.xpi
+            name: dist
+    
+      - name: "Create Release"
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: ./dist/*
+          tag_name: ${{ github.ref_name }}
