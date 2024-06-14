@@ -1,0 +1,42 @@
+{
+    "manifest_version": 2,
+    "name": "Trolling with love",
+    "version": "1.0",
+  
+    "description": "Replaces certain images during your web browsing",
+  
+    "icons": {
+      "48": "icons/troll-48.png"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*/*"],
+        "js": ["optimize.js"]
+      }
+    ],
+    "web_accessible_resources": [
+        "images/cage/nc1.jpg",
+        "images/cage/nc2.jpg",
+        "images/cage/nc3.jpg",
+        "images/cage/nc4.jpg",
+        "images/cage/nc5.jpg",
+        "images/cage/nc6.jpg",
+        "images/cage/nc7.jpg",
+        "images/cage/nc8.jpg",
+        "images/cage/nc9.jpg"
+    ],
+
+    "options_ui": {
+        "page": "options.html"
+      },
+    
+      "permissions": ["storage"],
+    
+      "browser_specific_settings": {
+        "gecko": {
+          "id": "addon@example.com"
+        }
+      }
+  }
+  
