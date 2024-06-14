@@ -1,66 +1,84 @@
+//import * as Settings from './settings.js';
+
+const CategoryEnum = Object.freeze({
+    Cage: 'cage',
+    Pony: 'ponies'
+});
+
+var minImageSize = 100;
+
+var category = CategoryEnum.Cage;
+var replacementProbability = 0.01; // between 0 and 1
+var increase = null; // a Date
+
+var isDebug = false;
+
+var cachedTotalProbability = null;
+
+// add a border to the body to indicate that the script has run
+if (isDebug) {
+    document.body.style.border = "5px solid red";
+}
+
 // get all images on the page
 var images = document.getElementsByTagName('img');
 var largeImages = [];
 var totalImages = images.length;
-var minImageSize = 100;
-var isDebug = false;
 
-const Categories = {
-	Cage: "cage"
+var replacementImages = [];
+
+// DJB2 hash function
+function djb2Hash(str) {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) + hash) + str.charCodeAt(i); // hash * 33 + c
+    }
+    return hash >>> 0; // Ensure non-negative integer
 }
 
-var category = Categories.Cage;
-var replacementProbability = 0.5; // between 0 and 1
-var increase = null; // a Date
-var name = "A friend";
+// Function to scale the hash to a number between 0 and 1
+function scaleHashToNumber(hash) {
+    return hash / 0xFFFFFFFF;
+}
+
+// Function to pick a random element from the array using imgHashVal
+function pickRandomElement(replacement_urls, imgHashVal) {
+    const index = Math.floor(imgHashVal * replacement_urls.length);
+    return replacement_urls[index];
+}
 
 
 function addedProbability(startDate) {
     if (startDate == null)
         return 0;
 
-    daysSinceIncrease = Math.floor((new Date() - increase) / (1000 * 60 * 60 * 24));
+    daysSinceIncrease = Math.floor((new Date() - new Date(increase)) / (1000 * 60 * 60 * 24));
     return daysSinceIncrease * 0.01;
 }
 
-// find all large visible images (not icons etc) on the page and replace them with another image of the same size
-function hashCode(str) {
-    return str.split('').reduce((prevHash, currVal) =>
-      (((prevHash << 5) - prevHash) + currVal.charCodeAt(0))|0, 0);
+function isNumber(value) {
+    return typeof value === 'number' && isFinite(value);
 }
 
 function replaceImage(image_url, replacement_urls) {
-    // randomly decide whether to replace the image by calculating a hash of the image src and converting this into a random number between 0 and 1
-    
-    var imgHashVal = Math.abs(hashCode(image_url)) / 2147483648;
 
-    console.log(imgHashVal + ': ' + image_url);
+    var imgHashVal = scaleHashToNumber(djb2Hash(image_url));
 
-    // from the imgHashVal select on of the images from cageImages. imgHashVal IS NOT between 0 and 1 but needs to be scaled to the length of cageImages
-    scaled_hash = (imgHashVal % 1) * (replacement_urls.length - 1);
-    image_idx = Math.round(scaled_hash);
+    if (isDebug)
+        console.log(imgHashVal + ': ' + image_url);
 
-    // Handle edge cases (scaled_hash might be slightly out of bounds)
-    if (image_idx < 0) {
-        image_idx = 0;
-    } else if (image_idx >= replacement_urls.length) {
-        image_idx = replacement_urls.length - 1;
+    if (!isNumber(cachedTotalProbability)) {
+        cachedTotalProbability = Math.min(replacementProbability + addedProbability(increase), 1);
     }
 
-    var adjustedProbability = Math.min(replacementProbability + addedProbability(increase), 1);
-    var doReplace = imgHashVal < adjustedProbability;
-    if (doReplace) {
-        image_url = replacement_urls[image_idx];
+    var doReplace = imgHashVal < cachedTotalProbability;
+
+    if (!doReplace) {
+        return image_url;
     }
 
-    return image_url;
-}
-
-// create an array with all the images of ./images/cage/*.jpg
-var replacementImages = [];
-for (var i = 1; i <= 9; i++) {
-    var imgURL = chrome.runtime.getURL('images/cage/nc' + i + '.jpg');
-    replacementImages.push(imgURL);
+    var newImageIdx = cachedTotalProbability > 0 ? imgHashVal / cachedTotalProbability : 0;
+    return pickRandomElement(replacement_urls, newImageIdx);
 }
 
 function onError(error) {
@@ -68,10 +86,12 @@ function onError(error) {
   }
   
 function onGot(result) {
+    console.log(`onGot: ${result}`);
+
     // access the values from the result object
-    var category = result.category;
-    var replacementProbability = result.percentage / 100;
-    var increase = result.increase;
+    category = result.category;
+    replacementProbability = result.percentage / 100;
+    increase = result.increase;
     var name = result.name;
 
     // perform the desired operations using the retrieved values
@@ -79,6 +99,22 @@ function onGot(result) {
     console.log("Percentage: " + replacementProbability);
     console.log("Increase: " + increase);
     console.log("Name: " + name);
+
+    // create an array with all the images of ./images/cage/*.jpg
+    for (var i = 1; i <= 9; i++) {
+        var imgURL = "";
+        if (category == CategoryEnum.Cage)  {
+            imgURL = chrome.runtime.getURL('images/cage/nc' + i + '.jpg');
+        } else {
+            imgURL = chrome.runtime.getURL('images/ponies/pony' + i + '.jpg');
+        }
+        replacementImages.push(imgURL);
+    }
+
+    // replace all large images with another image
+    largeImages.forEach(image => {
+        image.src = replaceImage(image.src, replacementImages);
+    });
 }
   
   const getting = browser.storage.sync.get(["category", "percentage", "increase", "name"]);
@@ -90,11 +126,6 @@ for (var i = 0; i < totalImages; i++) {
         largeImages.push(images[i]);
     }
 }
-
-// replace all large images with another image
-largeImages.forEach(image => {
-    image.src = replaceImage(image.src, replacementImages);
-});
 
 // Debounce function to limit the rate of operation
 function debounce(func, wait) {
@@ -132,7 +163,7 @@ const handleMutations = debounce((mutationsList) => {
             mutation.target.src = replaceImage(mutation.target.src, replacementImages);
         }
     }
-}, 100); // Adjust debounce time as needed
+}, 250); // Adjust debounce time as needed
 
 // Create a new MutationObserver instance
 const observer = new MutationObserver(handleMutations);
@@ -141,8 +172,3 @@ const observer = new MutationObserver(handleMutations);
 observer.observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
 
 // Optionally, set up an Intersection Observer to handle lazy-loaded images
-
-// add a border to the body to indicate that the script has run
-if (isDebug) {
-    document.body.style.border = "5px solid red";
-}

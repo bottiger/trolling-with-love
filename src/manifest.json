@@ -8,7 +8,7 @@
     "browser_specific_settings": {
       "gecko": {
         "id": "{0ef3117d-6ca4-4b5f-ab92-c92fecb07e31}",
-        "strict_min_version": "42.0"
+        "strict_min_version": "57.0"
       }
     },
 
@@ -23,6 +23,7 @@
       }
     ],
     "web_accessible_resources": [
+        "settings.js",
         "images/cage/nc1.jpg",
         "images/cage/nc2.jpg",
         "images/cage/nc3.jpg",
@@ -31,11 +32,22 @@
         "images/cage/nc6.jpg",
         "images/cage/nc7.jpg",
         "images/cage/nc8.jpg",
-        "images/cage/nc9.jpg"
+        "images/cage/nc9.jpg",
+        "images/cage/pony1.jpg",
+        "images/cage/pony2.jpg",
+        "images/cage/pony3.jpg",
+        "images/cage/pony4.jpg",
+        "images/cage/pony5.jpg",
+        "images/cage/pony6.jpg",
+        "images/cage/pony7.jpg",
+        "images/cage/pony8.jpg",
+        "images/cage/pony9.jpg",
+        "images/cage/pony10.jpg"
     ],
 
     "options_ui": {
-        "page": "options.html"
+        "page": "options.html",
+        "browser_style": true
       },
     
     "permissions": ["storage"]
