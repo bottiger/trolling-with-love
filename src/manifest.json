@@ -5,6 +5,13 @@
   
     "description": "Replaces certain images during your web browsing",
   
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "{0ef3117d-6ca4-4b5f-ab92-c92fecb07e31}",
+        "strict_min_version": "42.0"
+      }
+    },
+
     "icons": {
       "48": "icons/troll-48.png"
     },
@@ -31,12 +38,6 @@
         "page": "options.html"
       },
     
-      "permissions": ["storage"],
-    
-      "browser_specific_settings": {
-        "gecko": {
-          "id": "addon@example.com"
-        }
-      }
+    "permissions": ["storage"]
   }
   
