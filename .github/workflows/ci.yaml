@@ -45,11 +45,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Download Artifact"
-        - name: "Download Artifact"
-          uses: actions/download-artifact@v3
-          with:
-            name: web-ext-${{ github.ref_name }}.xpi
-            name: dist
+        uses: actions/download-artifact@v3
+        with:
+          name: web-ext-${{ github.ref_name }}.xpi
+          name: dist
     
       - name: "Create Release"
         uses: softprops/action-gh-release@v1
