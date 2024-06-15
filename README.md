@@ -2,6 +2,8 @@
 
 **Trolling with Love** is a Firefox extension designed for mischief and humor among friends. It replaces a small percentage of images on web pages with images of Nicolas Cage or ponies, based on user settings. This playful tool allows you to surprise and amuse your friends as they browse the web.
 
+![Nicolas Cage demo](docs/images/demo1.png?raw=true "Nicolas Cage demo")
+
 ## Features
 
 - **Image Replacement**: Choose between Nicolas Cage or pony images to replace a small fraction of images on web pages.
