@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Trolling with love",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Replaces certain images during your web browsing",
     "icons": {
       "48": "icons/troll-48.png"
