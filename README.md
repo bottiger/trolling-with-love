@@ -41,4 +41,4 @@ If you have ideas for improvements or find any issues, please feel free to contr
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the APGL 3.0 License - see the [LICENSE](LICENSE) file for details.
