@@ -1,2 +1,5 @@
 web-ext-artifacts
 .amo-upload-uuid
+node_modules
+package.json
+package-lock.json

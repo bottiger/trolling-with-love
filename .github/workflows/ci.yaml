@@ -34,10 +34,11 @@ jobs:
           timeout: 900000
 
       - name: "Upload Artifact"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: web-ext-${{ github.ref_name }}.xpi
+          name: {name}-{version}.xpi
           path: ${{ steps.web-ext-build.outputs.target }}
+          if-no-files-found: error
 
   release:
     needs: build
@@ -47,7 +48,7 @@ jobs:
       - name: "Download Artifact"
         uses: actions/download-artifact@v3
         with:
-          name: web-ext-${{ github.ref_name }}.xpi
+          name: {name}-{version}.xpi
           path: dist
     
       - name: "Create Release"
