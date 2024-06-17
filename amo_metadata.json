@@ -1,5 +1,7 @@
 {
-    "name": "Trolling with Love",
+    "name": {
+        "en-US": "Trolling with Love"
+    },
     "version": { "license": "GPL-3.0-or-later" },
     "categories": { "firefox": ["other"] },
     "contributions_url": "https://github.com/sponsors/bottiger/",

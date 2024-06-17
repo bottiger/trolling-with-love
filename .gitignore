@@ -3,3 +3,5 @@ web-ext-artifacts
 node_modules
 package.json
 package-lock.json
+.env.submit
+yarn.lock

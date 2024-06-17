@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Trolling with love",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "description": "Replaces certain images during your web browsing",
 
     "icons": {
@@ -15,7 +15,7 @@
     "browser_specific_settings": {
       "gecko": {
         "id": "{0ef3117d-6ca4-4b5f-ab92-c92fecb07e31}",
-        "strict_min_version": "57.0"
+        "strict_min_version": "109.0"
       }
     },
   
