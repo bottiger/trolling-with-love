@@ -1,11 +1,16 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Trolling with love",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Replaces certain images during your web browsing",
+
     "icons": {
-      "48": "icons/troll-48.png"
+      "16":  "icons/troll-16.png",
+      "32":  "icons/troll-32.png",
+      "48":  "icons/troll-48.png",
+      "128": "icons/troll-128.png"
     },
+  
 
     "browser_specific_settings": {
       "gecko": {
@@ -20,32 +25,21 @@
         "js": ["optimize.js"]
       }
     ],
+
     "web_accessible_resources": [
-        "settings.js",
-        "images/cage/nc1.jpg",
-        "images/cage/nc2.jpg",
-        "images/cage/nc3.jpg",
-        "images/cage/nc4.jpg",
-        "images/cage/nc5.jpg",
-        "images/cage/nc6.jpg",
-        "images/cage/nc7.jpg",
-        "images/cage/nc8.jpg",
-        "images/cage/nc9.jpg",
-        "images/cage/pony1.jpg",
-        "images/cage/pony2.jpg",
-        "images/cage/pony3.jpg",
-        "images/cage/pony4.jpg",
-        "images/cage/pony5.jpg",
-        "images/cage/pony6.jpg",
-        "images/cage/pony7.jpg",
-        "images/cage/pony8.jpg",
-        "images/cage/pony9.jpg",
-        "images/cage/pony10.jpg"
+      {
+        "resources": [
+          "settings.js",
+          "images/*"
+        ],
+        "matches": [
+          "*://*/*"
+        ]
+      }
     ],
 
     "options_ui": {
-        "page": "options.html",
-        "browser_style": true
+        "page": "options.html"
       },
     
     "permissions": ["storage"]

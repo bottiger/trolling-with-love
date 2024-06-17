@@ -1,0 +1,19 @@
+{
+    "name": "Trolling with Love",
+    "version": { "license": "GPL-3.0-or-later" },
+    "categories": { "firefox": ["other"] },
+    "contributions_url": "https://github.com/sponsors/bottiger/",
+    "default_locale": "en-US",
+    "description": {
+        "en-US": "Trolling with Love is all about injecting humor into your web browsing experience. Inspired by a popular Chrome extension, this Firefox add-on allows you to randomly replace a fraction of images on web pages with either Nicolas Cage or pony images, depending on your preference.\n\nKey Features:\n\nImage Replacement: Choose between Nicolas Cage or pony images to replace a small percentage of images on web pages.\nPercentage Setting: Control how often images are replaced, with a default of 1%.\nAutomatic Increase: Option to increase the replacement probability by 0.5% daily for added surprise.\nPersonalization: Add your name for identification within the extension.\n\nEnjoy the reactions of your friends as they encounter unexpected images while browsing, all in good fun with \"Trolling with Love\"!"
+    },
+    "is_experimental": true,
+    "requires_payment": false,
+    "summary": {
+        "en-US": "Inject humor into your web browsing experience with random image replacements."
+    },
+    "homepage": {
+        "en-US": "https://github.com/bottiger/trolling-with-love"
+    },
+    "tags": ["fun", "humor", "images", " image search"]
+}
