@@ -27,6 +27,67 @@ var totalImages = images.length;
 
 var replacementImages = [];
 
+function fnv1a(str) {
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) {
+        hash ^= str.charCodeAt(i);
+        hash = (hash * 0x01000193) >>> 0;
+    }
+    return hash >>> 0;
+}
+
+function murmurhash3_32_gc(key, seed) {
+    let remainder, bytes, h1, h1b, c1, c2, k1, i;
+    
+    remainder = key.length & 3; // key.length % 4
+    bytes = key.length - remainder;
+    h1 = seed;
+    c1 = 0xcc9e2d51;
+    c2 = 0x1b873593;
+    i = 0;
+    
+    while (i < bytes) {
+        k1 = 
+          ((key.charCodeAt(i) & 0xff)) |
+          ((key.charCodeAt(++i) & 0xff) << 8) |
+          ((key.charCodeAt(++i) & 0xff) << 16) |
+          ((key.charCodeAt(++i) & 0xff) << 24);
+        ++i;
+        
+        k1 = (((k1 & 0xffff) * c1) + ((((k1 >>> 16) * c1) & 0xffff) << 16)) & 0xffffffff;
+        k1 = (k1 << 15) | (k1 >>> 17);
+        k1 = (((k1 & 0xffff) * c2) + ((((k1 >>> 16) * c2) & 0xffff) << 16)) & 0xffffffff;
+
+        h1 ^= k1;
+        h1 = (h1 << 13) | (h1 >>> 19);
+        h1b = (((h1 & 0xffff) * 5) + ((((h1 >>> 16) * 5) & 0xffff) << 16)) & 0xffffffff;
+        h1 = (((h1b & 0xffff) + 0x6b64) + ((((h1b >>> 16) + 0xe654) & 0xffff) << 16));
+    }
+
+    k1 = 0;
+
+    switch (remainder) {
+        case 3: k1 ^= (key.charCodeAt(i + 2) & 0xff) << 16;
+        case 2: k1 ^= (key.charCodeAt(i + 1) & 0xff) << 8;
+        case 1: k1 ^= (key.charCodeAt(i) & 0xff);
+        
+        k1 = (((k1 & 0xffff) * c1) + ((((k1 >>> 16) * c1) & 0xffff) << 16)) & 0xffffffff;
+        k1 = (k1 << 15) | (k1 >>> 17);
+        k1 = (((k1 & 0xffff) * c2) + ((((k1 >>> 16) * c2) & 0xffff) << 16)) & 0xffffffff;
+        h1 ^= k1;
+    }
+
+    h1 ^= key.length;
+
+    h1 ^= h1 >>> 16;
+    h1 = (((h1 & 0xffff) * 0x85ebca6b) + ((((h1 >>> 16) * 0x85ebca6b) & 0xffff) << 16)) & 0xffffffff;
+    h1 ^= h1 >>> 13;
+    h1 = (((h1 & 0xffff) * 0xc2b2ae35) + ((((h1 >>> 16) * 0xc2b2ae35) & 0xffff) << 16)) & 0xffffffff;
+    h1 ^= h1 >>> 16;
+
+    return h1 >>> 0;
+}
+
 // DJB2 hash function
 function djb2Hash(str) {
     let hash = 5381;
@@ -42,9 +103,8 @@ function scaleHashToNumber(hash) {
 }
 
 // Function to pick a random element from the array using imgHashVal
-function pickRandomElement(replacement_urls, imgHashVal) {
-    const index = Math.floor(imgHashVal * replacement_urls.length);
-    return replacement_urls[index];
+function pickRandomElement(replacement_urls, imgIndex) {
+    return replacement_urls[imgIndex];
 }
 
 
@@ -62,7 +122,7 @@ function isNumber(value) {
 
 function replaceImage(image_url, replacement_urls) {
 
-    var imgHashVal = scaleHashToNumber(djb2Hash(image_url));
+    var imgHashVal = scaleHashToNumber(murmurhash3_32_gc(image_url, 0x12399678));
 
     if (isDebug)
         console.log(imgHashVal + ': ' + image_url);
@@ -77,7 +137,11 @@ function replaceImage(image_url, replacement_urls) {
         return image_url;
     }
 
-    var newImageIdx = cachedTotalProbability > 0 ? imgHashVal / cachedTotalProbability : 0;
+    var newImageIdx = cachedTotalProbability > 0 ? (imgHashVal / cachedTotalProbability) * replacement_urls.length : 0;
+    newImageIdx = Math.floor(newImageIdx);
+    
+    console.log("imgHashVal" + imgHashVal + " scaled: " + (imgHashVal / cachedTotalProbability) +  " New image idx: " + newImageIdx + " cachedTotalProbability: " + cachedTotalProbability);
+    
     return pickRandomElement(replacement_urls, newImageIdx);
 }
 

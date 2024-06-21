@@ -1,4 +1,4 @@
-# Trolling with Love Firefox Extension
+# Trolling with Love ❤️ Firefox Extension
 
 **Trolling with Love** is a Firefox extension designed for mischief and humor among friends. It replaces a small percentage of images on web pages with images of Nicolas Cage or ponies, based on user settings. This playful tool allows you to surprise and amuse your friends as they browse the web.
 
@@ -13,12 +13,8 @@
 
 ## Installation
 
-To install the extension, follow these steps:
-
-1. Download the extension package (`trolling-with-love.xpi`).
-2. Open Firefox and navigate to `about:addons`.
-3. Click on the gear icon and select "Install Add-on From File".
-4. Choose the downloaded `trolling-with-love.xpi` file and click "Install".
+Get the latest version here: https://addons.mozilla.org/en-US/firefox/addon/trolling-with-love/
+Be nice and write you name in the settings for the extension in order to identify yourself ❤️
 
 ## Usage
 
