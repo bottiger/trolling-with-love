@@ -1,4 +1,4 @@
-//import * as Settings from './settings.js';
+import { calculateCurrentProbability } from './shared.js';
 
 var categoriesNames = [
   { value: "cage", text: 'Nicolas Cage' },
