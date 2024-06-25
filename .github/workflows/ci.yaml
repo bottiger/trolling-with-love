@@ -42,12 +42,12 @@ jobs:
           apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
           timeout: 900000
 
-      - name: "Upload Artifact"
-        uses: actions/upload-artifact@v4
-        with:
-          name: {name}-{version}.xpi
-          path: ${{ steps.web-ext-build.outputs.target }}
-          if-no-files-found: error
+#      - name: "Upload Artifact"
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: {name}-{version}.xpi
+#          path: ${{ steps.web-ext-build.outputs.target }}
+#          if-no-files-found: error
 
 #  release:
 #    needs: build
