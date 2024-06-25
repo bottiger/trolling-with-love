@@ -46,14 +46,14 @@ jobs:
           cmd: build
           source: src
           filename: "{name}-{version}.xpi" 
-          
+
       - name: "Web Ext Sign"
         id: web-ext-sign
         uses: kewisch/action-web-ext@v1
         with:
           cmd: sign
           source: ${{ steps.web-ext-build.outputs.target }}
-          channel: unlisted
+          channel: listed
           apiKey: ${{ secrets.AMO_SIGN_KEY }}
           apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
           timeout: 900000
