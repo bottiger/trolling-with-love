@@ -23,6 +23,12 @@ jobs:
           cmd: build
           source: src
           filename: "{name}-{version}.xpi"
+        env:
+          WEB_EXT_FILENAME: "{name}-{version}.xpi"
+
+      - name: Print filename
+        run: echo "The generated file is ${{ env.WEB_EXT_FILENAME }}"
+
 
   release:
     runs-on: ubuntu-latest
