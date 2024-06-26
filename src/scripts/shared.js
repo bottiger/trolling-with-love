@@ -1,3 +1,6 @@
+const isFirefox = typeof browser !== 'undefined';
+const storage = isFirefox ? browser.storage : chrome.storage;
+
 export function calculateCurrentProbability(increaseDate) {
     // Your logic for calculating the current probability (p) based on the increase date
     // For demonstration purposes, we'll use a simple calculation

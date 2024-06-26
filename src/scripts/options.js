@@ -1,4 +1,6 @@
 import { calculateCurrentProbability } from './shared.js';
+const isFirefox = typeof browser !== 'undefined';
+const storage = isFirefox ? browser.storage : chrome.storage;
 
 var categoriesNames = [
   { value: "cage", text: 'Nicolas Cage' },
@@ -8,7 +10,7 @@ var categoriesNames = [
 function saveOptions(e) {
     e.preventDefault();
     console.log(`Storing values`);
-    browser.storage.sync.set({
+    storage.sync.set({
       category:     document.querySelector("#category").value,
       percentage:   document.querySelector("#percentage").value,
       increase:     document.querySelector("#increase").checked ? new Date() : null,
@@ -64,7 +66,7 @@ function saveOptions(e) {
       console.log(`Error: ${error}`);
     }
   
-    let getting = browser.storage.sync.get(["category", "percentage", "increase", "name"]);
+    let getting = storage.sync.get(["category", "percentage", "increase", "name"]);
     getting.then(setCurrentChoice, onError);
   }
   

@@ -1,3 +1,6 @@
+const isFirefox = typeof browser !== 'undefined';
+const storage = isFirefox ? browser.storage : chrome.storage;
+
 //import { calculateCurrentProbability } from './shared.js';
 function calculateCurrentProbability(increaseDate) {
     // Your logic for calculating the current probability (p) based on the increase date
@@ -115,8 +118,10 @@ function pickRandomElement(replacement_urls, imgIndex) {
 
 
 function addedProbability(startDate) {
-    if (startDate == null)
+    // Check if startDate is a valid Date object
+    if (!(startDate instanceof Date) || isNaN(startDate)) {
         return 0;
+    }
 
     daysSinceIncrease = Math.floor((new Date() - new Date(increase)) / (1000 * 60 * 60 * 24));
     return daysSinceIncrease * 0.01;
@@ -166,7 +171,7 @@ function onGot(result) {
 
     // perform the desired operations using the retrieved values
     console.log("Category: " + category);
-    console.log("Percentage: " + replacementProbability);
+    console.log("Probability: " + replacementProbability);
     console.log("Increase: " + increase);
     console.log("Name: " + name);
 
@@ -187,7 +192,7 @@ function onGot(result) {
     });
 }
   
-  const getting = browser.storage.sync.get(["category", "percentage", "increase", "name"]);
+  const getting = storage.sync.get(["category", "percentage", "increase", "name"]);
   getting.then(onGot, onError);
 
 // loop through all images and check if they are large images
