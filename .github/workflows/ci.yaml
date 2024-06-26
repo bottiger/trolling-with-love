@@ -30,7 +30,7 @@ jobs:
       - name: "Create Tag if Version Changed"
         id: create_tag
         run: |
-          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+          if git ls-remote --tags origin | grep "refs/tags/v${{ env.VERSION }}" >/dev/null; then
             echo "Tag v${{ env.VERSION }} already exists"
           else
             git config user.name "github-actions"
