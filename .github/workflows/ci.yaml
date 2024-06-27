@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.extract_info.outputs.version }}
-      do_release: ${{ steps.create_tag.outputs.do_release }}
 
     steps:
       - name: "Checkout"
@@ -31,6 +30,7 @@ jobs:
           echo "NAME=$NAME" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "DO_RELEASE='false'" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: "Create Tag if Version Changed"
         id: create_tag
@@ -81,6 +81,11 @@ jobs:
     #if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     #if: startsWith(github.ref, 'refs/tags/v')
     steps:
+      - env:
+          OUTPUT1: ${{needs.build.outputs.version}}
+        run: echo "$OUTPUT1"
+
+  
       - name: "Checkout"
         uses: actions/checkout@v3
 
