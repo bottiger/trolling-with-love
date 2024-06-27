@@ -35,6 +35,11 @@ This extension was inspired by a similar Chrome extension but is now available f
 
 If you have ideas for improvements or find any issues, please feel free to contribute or report them in the [GitHub repository](https://github.com/bottiger/trolling-with-love).
 
+## Supporting the Project
+
+If you enjoy using **Trolling with Love**, the best way to support the project is by leaving a good rating and review on the [Firefox Add-ons page](https://addons.mozilla.org/en-US/firefox/addon/trolling-with-love/). Since this extension is designed for playful, temporary use, positive ratings and reviews are essential to help others discover and trust it.
+
+
 ## License
 
 This project is licensed under the APGL 3.0 License - see the [LICENSE](LICENSE) file for details.
