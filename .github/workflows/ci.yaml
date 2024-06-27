@@ -15,6 +15,10 @@ jobs:
   build:
     name: "Build"
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract_info.outputs.version }}
+      do_release: ${{ steps.create_tag.outputs.do_release }}
+
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
