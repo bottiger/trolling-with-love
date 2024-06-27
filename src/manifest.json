@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Trolling with love",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "description": "Replaces certain images during your web browsing",
 
     "icons": {
