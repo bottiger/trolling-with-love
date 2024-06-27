@@ -40,7 +40,7 @@ jobs:
             git push origin v${{ env.VERSION }}
             echo "::set-output name=create_release::true"
             echo "DO_RELEASE='true'" >> $GITHUB_ENV
-            run: echo "::set-output name=do_release::true"
+            echo "::set-output name=do_release::true"
           fi
 
       - name: "web-ext build"
