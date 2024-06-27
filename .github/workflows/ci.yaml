@@ -53,11 +53,11 @@ jobs:
         env:
           WEB_EXT_FILENAME: "${{ env.NAME }}-${{ env.VERSION }}.xpi"
 
-      - name: Print filename
+      - name: Print DO_RELEASE value
         run: echo "The generated file is ${{ env.WEB_EXT_FILENAME }}"
 
-      - name: "Print DO_RELEASE value"
-        run: echo "DO_RELEASE value: ${{ env.DO_RELEASE }}"
+      - name: Print filename
+        run: echo "do release value ${{ env.DO_RELEASE  }}"
 
       - name: "Print Ref Information"
         run: |
