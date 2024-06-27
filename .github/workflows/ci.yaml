@@ -98,7 +98,7 @@ jobs:
         with:
           cmd: build
           source: src
-          filename: "${{ env.NAME }}-${{ env.VERSION }}.xpi"
+          filename: trolling-with-love-${{ needs.build.outputs.VERSION }}.xpi"
 
       - name: "Web Ext Sign"
         id: web-ext-sign
