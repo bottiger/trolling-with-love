@@ -129,5 +129,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ steps.web-ext-build.outputs.target }}
-          asset_name: "${{ env.NAME }}-${{ env.VERSION }}.xpi"
+          asset_name: "trolling-with-love-${{ needs.build.outputs.VERSION }}.xpi"
           asset_content_type: application/x-xpinstall
