@@ -51,7 +51,7 @@ jobs:
         id: set_version
         run: echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/v}"
 
-      - name: "web-ext build"
+      - name: "Build Firefox Extension"
         id: web-ext-build
         uses: kewisch/action-web-ext@v1
         with:
@@ -60,6 +60,16 @@ jobs:
           filename: "${{ env.NAME }}-${{ env.VERSION }}.xpi"
         env:
           WEB_EXT_FILENAME: "${{ env.NAME }}-${{ env.VERSION }}.xpi"
+
+      - name: "Build Chrome Extension"
+        id: build_chrome
+        run: |
+          mkdir -p build
+          cp -r src/* build/
+          zip -r ${{ env.NAME }}-${{ env.VERSION }}.zip build/*
+        env:
+          NAME: ${{ env.NAME }}
+          VERSION: ${{ env.VERSION }}
 
       - name: Print DO_RELEASE value
         run: echo "The generated file is ${{ env.WEB_EXT_FILENAME }}"
@@ -111,6 +121,7 @@ jobs:
           apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
           timeout: 900000
 
+      # Publish github extension
       - name: "Create GitHub Release"
         id: create_release
         uses: actions/create-release@v1
@@ -122,7 +133,8 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: "Upload Release Asset"
+      # Publish firefox extension
+      - name: "Upload Firefox Release Asset"
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -131,3 +143,33 @@ jobs:
           asset_path: ${{ steps.web-ext-build.outputs.target }}
           asset_name: "trolling-with-love-${{ needs.build.outputs.VERSION }}.xpi"
           asset_content_type: application/x-xpinstall
+
+      # Publish Chrome Extension
+      - name: "Upload Chrome Release Asset"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
+          asset_name: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
+          asset_content_type: application/zip
+
+      - name: "Upload Chrome Extension to Web Store"
+        id: upload_chrome
+        uses: futuratrepadeira/cws-upload@v2
+        with:
+          extension_id: ${{ secrets.CHROME_EXTENSION_ID }}
+          client_id: ${{ secrets.CHROME_CLIENT_ID }}
+          client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          asset_path: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
+
+      - name: "Publish Chrome Extension"
+        id: publish_chrome
+        uses: futuratrepadeira/cws-publish@v2
+        with:
+          extension_id: ${{ secrets.CHROME_EXTENSION_ID }}
+          client_id: ${{ secrets.CHROME_CLIENT_ID }}
+          client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
