@@ -13,7 +13,11 @@
 
 ## Installation
 
-Get the latest version here: https://addons.mozilla.org/en-US/firefox/addon/trolling-with-love/
+Get the latest version here: 
+
+* Firefox: https://addons.mozilla.org/en-US/firefox/addon/trolling-with-love/
+* Chrome: https://chromewebstore.google.com/detail/trolling-with-love/bnoooompfljhcmpeompgjfibbkjfbofh
+
 Be nice and write you name in the settings for the extension in order to identify yourself ❤️
 
 ## Usage
