@@ -102,6 +102,16 @@ jobs:
       - name: Print VERSION
         run: echo "VERSION=${{ needs.build.outputs.VERSION }}"
 
+      - name: "Build Chrome Extension"
+        id: build_chrome
+        run: |
+          mkdir -p build
+          cp -r src/* build/
+          zip -r ${{ env.NAME }}-${{ env.VERSION }}.zip build/*
+        env:
+          NAME: ${{ env.NAME }}
+          VERSION: ${{ env.VERSION }}
+
       - name: "web-ext build"
         id: web-ext-build
         uses: kewisch/action-web-ext@v1
