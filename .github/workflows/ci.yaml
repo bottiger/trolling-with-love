@@ -145,31 +145,13 @@ jobs:
           asset_content_type: application/x-xpinstall
 
       # Publish Chrome Extension
-      - name: "Upload Chrome Release Asset"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
-          asset_name: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
-          asset_content_type: application/zip
-
-      - name: "Upload Chrome Extension to Web Store"
-        id: upload_chrome
-        uses: futuratrepadeira/cws-upload@v2
-        with:
-          extension_id: ${{ secrets.CHROME_EXTENSION_ID }}
-          client_id: ${{ secrets.CHROME_CLIENT_ID }}
-          client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
-          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          asset_path: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
-
       - name: "Publish Chrome Extension"
         id: publish_chrome
-        uses: futuratrepadeira/cws-publish@v2
+        uses: mobilefirstllc/cws-publish@latest
         with:
+          action: 'upload' 
           extension_id: ${{ secrets.CHROME_EXTENSION_ID }}
           client_id: ${{ secrets.CHROME_CLIENT_ID }}
           client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          zip_file: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
