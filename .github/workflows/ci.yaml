@@ -107,7 +107,7 @@ jobs:
         run: |
           mkdir -p build
           cp -r src/* build/
-          zip -r ${{ env.NAME }}-${{ env.VERSION }}.zip build/*
+          zip -r trolling-with-love-${{ needs.build.outputs.VERSION }}.zip build/*
         env:
           NAME: ${{ env.NAME }}
           VERSION: ${{ env.VERSION }}
@@ -164,4 +164,4 @@ jobs:
           client_id: ${{ secrets.CHROME_CLIENT_ID }}
           client_secret: ${{ secrets.CHROME_CLIENT_SECRET }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          zip_file: "${{ env.NAME }}-${{ needs.build.outputs.VERSION }}.zip"
+          zip_file: "trolling-with-love-${{ needs.build.outputs.VERSION }}.zip"
