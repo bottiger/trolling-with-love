@@ -37,11 +37,11 @@ This extension was inspired by a similar Chrome extension but is now available f
 
 ## Contributing
 
-If you have ideas for improvements or find any issues, please feel free to contribute or report them in the [GitHub repository](https://github.com/bottiger/trolling-with-love).
+If you have ideas for improvements or find any issues, please feel free to contribute or report them on the [GitHub issue page](https://github.com/bottiger/trolling-with-love/issues).
 
 ## Supporting the Project
 
-If you enjoy using **Trolling with Love**, the best way to support the project is by leaving a good rating and review on the [Firefox Add-ons page](https://addons.mozilla.org/en-US/firefox/addon/trolling-with-love/). Since this extension is designed for playful, temporary use, positive ratings and reviews are essential to help others discover and trust it.
+If you enjoy using **Trolling with Love**, the best way to support the project is by leaving a good rating and review on the [Firefox Add-ons page](https://addons.mozilla.org/en-US/firefox/addon/trolling-with-love/) or [Chrome extension page](https://chromewebstore.google.com/detail/trolling-with-love/bnoooompfljhcmpeompgjfibbkjfbofh). Since this extension is designed for playful, temporary use, positive ratings and reviews are essential to help others discover and trust it.
 
 
 ## License
