@@ -38,6 +38,10 @@ Be nice and write you name in the settings for the extension in order to identif
 
 This extension was inspired by a similar Chrome extension but is now available for Firefox users as well. It aims to add a touch of fun and surprise to your web browsing experience.
 
+## Related work
+
+[TrollMe.sh](https://github.com/bottiger/trollme.sh) 
+
 ## Contributing
 
 If you have ideas for improvements or find any issues, please feel free to contribute or report them on the [GitHub issue page](https://github.com/bottiger/trolling-with-love/issues).
