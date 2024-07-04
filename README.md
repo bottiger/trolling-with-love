@@ -31,6 +31,9 @@ Be nice and write you name in the settings for the extension in order to identif
    - **Name**: Optionally enter your name for identification.
 4. Save your settings and start browsing. Enjoy the reactions!
 
+> [!TIP]
+> Prioritize identifying yourself. It is just a very unfulfilling experience to find an unknown extension in your browser and not knowing where it came from. It is equally unfulfilling not knowing when you victim has found it.
+
 ## About
 
 This extension was inspired by a similar Chrome extension but is now available for Firefox users as well. It aims to add a touch of fun and surprise to your web browsing experience.
